@@ -1,0 +1,45 @@
+{
+  "name": "loopback-rest-connector-syncgateway",
+  "description": "api",
+  "version": "v0.2.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "./node_modules/.bin/babel-node ./server/server.js",
+    "watch": "./node_modules/.bin/nodemon --exec ./node_modules/.bin/babel-node ./server/server.js",
+    "watch-test": "./node_modules/.bin/nodemon  --exec './node_modules/.bin/babel-node ./node_modules/.bin/_mocha -- ./test/*||exit 1'",
+    "eslint": "sh ./scripts/eslint.sh"
+  },
+  "dependencies": {
+    "ajv": "^4.0.1",
+    "babel": "^6.1.18",
+    "babel-cli": "^6.4.5",
+    "babel-core": "^6.1.21",
+    "babel-plugin-add-module-exports": "^0.1.2",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-es2015-node5": "^1.2.0",
+    "babel-root-import": "^3.2.2",
+    "babel-types": "^6.7.2",
+    "chalk": "^1.1.3",
+    "debug": "^2.2.0",
+    "express-jsonschema": "^1.1.0",
+    "lodash": "^4.11.1",
+    "loopback-connector-rest": "^2.0.0",
+    "request-promise": "^3.0.0"
+  },
+  "pre-commit": [
+    "eslint"
+  ],
+  "devDependencies": {
+    "babel-eslint": "^4.1.8",
+    "chai": "^3.0.0",
+    "eslint": "^1.8.0",
+    "eslint-config-airbnb": "^0.1.0",
+    "eslint-plugin-react": "^3.6.3",
+    "isparta": "^4.0.0",
+    "mocha": "^2.2.5",
+    "nodemon": "^1.9.2",
+    "pre-commit": "^1.0.10",
+    "sinon": "^1.17.4",
+    "sinon-chai": "^2.8.0"
+  }
+}
