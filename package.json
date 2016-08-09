@@ -1,12 +1,9 @@
 {
   "name": "loopback-rest-connector-syncgateway",
   "description": "api",
-  "version": "v0.2.0",
+  "version": "0.2.0",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/.bin/babel-node ./server/server.js",
-    "watch": "./node_modules/.bin/nodemon --exec ./node_modules/.bin/babel-node ./server/server.js",
-    "watch-test": "./node_modules/.bin/nodemon  --exec './node_modules/.bin/babel-node ./node_modules/.bin/_mocha -- ./test/*||exit 1'",
     "eslint": "sh ./scripts/eslint.sh"
   },
   "dependencies": {
@@ -41,5 +38,15 @@
     "pre-commit": "^1.0.10",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minho814/loopback-rest-connector-syncgateway.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/minho814/loopback-rest-connector-syncgateway/issues"
+  },
+  "homepage": "https://github.com/minho814/loopback-rest-connector-syncgateway#readme"
 }
