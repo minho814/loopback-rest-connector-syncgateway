@@ -1,11 +1,22 @@
 {
   "name": "loopback-rest-connector-syncgateway",
-  "description": "api",
+  "description": "Component for connecting to couchbase's sync gateway",
   "version": "0.2.0",
   "main": "index.js",
   "scripts": {
     "eslint": "sh ./scripts/eslint.sh"
   },
+  "keywords": {
+    "loopback",
+    "strongloop",
+    "component",
+    "couchbase",
+    "sync",
+    "gateway",
+    "syncgateway",
+    "rest",
+    "connector"
+  } 
   "dependencies": {
     "ajv": "^4.0.1",
     "babel": "^6.1.18",
