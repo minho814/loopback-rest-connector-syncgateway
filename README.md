@@ -6,8 +6,8 @@ loopback-rest-connector-syncgateway
 1. add to component-config:
 ```
 "loopback-rest-connector-syncgateway": {
-  "url": 192.168.99.100:4984,
-  "bucket": worker,
+  "url": process.env.SYNC_GATEWAY_URL:process.env.SYNC_GATEWAY_PORT,
+  "bucket": process.env.BUCKET_NAME,
   "models": [
     {
       "worker": [ "databases", "documents-and-attachments" ]
@@ -15,5 +15,4 @@ loopback-rest-connector-syncgateway
   ]
 }
 ```
-2. Change the model datasource to transient in model-config.json
-3. The name of your model will be the name of your bucket
+2. Change the model datasource to transient in model-config
