@@ -1,5 +1,7 @@
-loopback-rest-connector-syncgateway
-===
+# loopback-rest-connector-syncgateway
+
+## Installation
+```npm i --save loopback-rest-connector-syncgateway```
 
 sync gateway public rest api reference:
 http://developer.couchbase.com/documentation/mobile/1.2/develop/references/sync-gateway/rest-api/index.html

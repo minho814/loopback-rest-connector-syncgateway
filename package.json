@@ -6,7 +6,7 @@
   "scripts": {
     "eslint": "sh ./scripts/eslint.sh"
   },
-  "keywords": {
+  "keywords": [
     "loopback",
     "strongloop",
     "component",
@@ -16,7 +16,7 @@
     "syncgateway",
     "rest",
     "connector"
-  } 
+  ],
   "dependencies": {
     "ajv": "^4.0.1",
     "babel": "^6.1.18",
