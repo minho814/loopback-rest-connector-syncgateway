@@ -1,4 +1,8 @@
+const debug = require('debug')('couchbase:connector:local');
+
 module.exports = (model) => {
+  debug("Adding local-documents remote methods");
+  
   model.remoteMethod('putLocalDoc', {
     accepts: [
       {arg: 'data', type: 'object', http: {source: 'body'}},

@@ -1,5 +1,9 @@
+const debug = require('debug')('couchbase:connector:documents');
+
 module.exports = (model) => {
-	model.remoteMethod('create', {
+  debug("Adding documents-and-attachments remote methods");
+
+  model.remoteMethod('create', {
     accepts: {arg: 'data', type: 'object', http: {source: 'body'}},
     returns: {arg: 'data', type: 'object', root: true },
     http: {path: '/', verb: 'post'}
@@ -14,7 +18,7 @@ module.exports = (model) => {
     http: {path: '/:id', verb: 'put'}
   });
 
-	model.remoteMethod('findById', {
+  model.remoteMethod('findById', {
     accepts: {arg: 'id', type: 'any', required: true,http: {source: 'path'}},
     returns: {arg: 'data', type: 'object', root: true },
     http: {path: '/:id', verb: 'get'}

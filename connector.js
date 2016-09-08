@@ -1,4 +1,9 @@
+const debug = require('debug')('couchbase:connector:connector');
+
 module.exports = (url, bucket) => {
+	debug("url ", url);
+	debug("bucket ", bucket);
+
   const headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json'

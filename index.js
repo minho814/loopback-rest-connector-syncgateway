@@ -1,14 +1,20 @@
+const debug = require('debug')('couchbase:connector:index');
+
 const loopback = require('loopback');
 
 const Couchbase = class CouchBase {
 
   constructor(url, bucket) {
+    debug("url", url);
+    debug("bucket", bucket);
+
     const connector = require('./connector.js');
 
     this.ds = loopback.createDataSource(connector(url, bucket));
   }
 
   getStatus() {
+    debug("getStatus");
     return this.ds.getStatus()
       .then((result) => {
         return result[0];
@@ -19,6 +25,7 @@ const Couchbase = class CouchBase {
   }
 
   find() {
+    debug("find");
     return this.ds.find()
       .then((result) => {
         return result[0];
@@ -29,6 +36,7 @@ const Couchbase = class CouchBase {
   }
 
   findById(id) {
+    debug("findById");
     return this.ds.findById(id)
       .then((result) => {
         return result[0];
@@ -39,6 +47,7 @@ const Couchbase = class CouchBase {
   }
 
   findByIds(ids) {
+    debug("findByIds");
     return this.ds.findByIds(ids)
       .catch((error) => {
         throw error;
@@ -46,6 +55,7 @@ const Couchbase = class CouchBase {
   }
 
   findByKeys(keys) {
+    debug("findByKeys");
     return this.ds.findByKeys(keys)
       .catch((error) => {
         throw error;
@@ -53,6 +63,7 @@ const Couchbase = class CouchBase {
   }
 
   create(data) {
+    debug("create");
     return this.ds.create(data)
       .then((result) => {
         return result[0];
@@ -63,6 +74,7 @@ const Couchbase = class CouchBase {
   }
 
   createMany(data, model) {
+    debug("createMany");
     for(let x in data.docs) {
       data.docs[x] = new model(data.docs[x]);
     }
@@ -76,6 +88,7 @@ const Couchbase = class CouchBase {
   }
 
   updateAttributes(data, id) {
+    debug("updateAttributes");
     return this.findById(id)
       .then((result) => {
         const rev = result._rev;
@@ -92,6 +105,7 @@ const Couchbase = class CouchBase {
   }
 
   deleteById(id) {
+    debug("deleteById");
     return this.findById(id)
       .then((result) => {
         const rev = result._rev;
@@ -106,6 +120,7 @@ const Couchbase = class CouchBase {
   }
 
   getChanges() {
+    debug("getChanges");
     return this.ds.getChanges()
       .then((result) => {
         return result[0];
@@ -116,20 +131,22 @@ const Couchbase = class CouchBase {
   }
 
   putAttachment(data, id, attachment) {
-   return this.findById(id)
-    .then((result) => {
-      const rev = result._rev;
-      return this.ds.putAttachment(data, id, rev, attachment);
-    })
-    .then((result) => {
-      return result[0];
-    })
-    .catch((error) => {
-      throw error;
-    })
+    debug("putAttachment");
+    return this.findById(id)
+      .then((result) => {
+        const rev = result._rev;
+        return this.ds.putAttachment(data, id, rev, attachment);
+      })
+      .then((result) => {
+        return result[0];
+      })
+      .catch((error) => {
+        throw error;
+      })
   }
 
   getAttachment(id, attachment) {
+    debug("getAttachment");
     return this.ds.getAttachment(id, attachment)
       .then((result) => {
         return result[0];
@@ -140,6 +157,7 @@ const Couchbase = class CouchBase {
   }
 
   putLocalDoc(data, localId) {
+    debug("putLocalDoc");
     return this.ds.putLocalDoc(data, localId)
       .then((result) => {
         return result[0];
@@ -150,6 +168,7 @@ const Couchbase = class CouchBase {
   }
 
   getLocalDoc(localId) {
+    debug("getLocalDoc");
     return this.ds.getLocalDoc(localId)
       .then((result) => {
         return result[0];
@@ -160,6 +179,7 @@ const Couchbase = class CouchBase {
   }
 
   deleteLocalDoc(localId) {
+    debug("deleteLocalDoc");
     return this.getLocalDoc(localId)
       .then((result) => {
         const rev = result._rev;
@@ -171,6 +191,7 @@ const Couchbase = class CouchBase {
   }
 
   postFacebookToken(data) {
+    debug("postFacebookToken");
     return this.ds.postFacebookToken(data)
       .catch((error) => {
         throw error;
@@ -178,6 +199,7 @@ const Couchbase = class CouchBase {
   }
 
   postPersonaAssertion(data) {
+    debug("postPersonaAssertion");
     return this.ds.postPersonaAssertion(data)
       .catch((error) => {
         throw error;
@@ -215,17 +237,25 @@ const Couchbase = class CouchBase {
 }
 
 module.exports = (app, options) => {
+  debug("options", options);
+
   const url = options.url;
   const bucket = options.bucket;
-  if (!url || !bucket) {
-    throw new Error("Invalid configurations in component-config.json");
-  }
+
+  if (!url) { throw new Error('options.url is undefined'); }
+  if (!bucket) { throw new Error('options.bucket is undefined'); }
 
   options.models.forEach(item => {
     const model = Object.keys(item)[0];
     const categories = item[model];
 
-    const cb = new Couchbase(`http://${url}`, model.toLowerCase());
+    debug("categories", categories);
+
+    if(!app.models[model]) {
+      throw new Error(`'${model}' does not match any of the valid models`);
+    }
+
+    const cb = new Couchbase(`http://${url}`, bucket);
     cb.couchbasify(app.models[model], categories);
   });
 }

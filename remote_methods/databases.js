@@ -1,11 +1,15 @@
+const debug = require('debug')('couchbase:connector:databases');
+
 module.exports = (model) => {
+  debug("Adding databases remote methods");
+  
   model.remoteMethod('getStatus', {
     returns: {arg: 'data', type: 'object', root: true },
     http: {path: '/', verb: 'get'}
   });
 
   model.remoteMethod('find', {
-    returns: {arg: 'data', type: 'object', root: true },
+    returns: {arg: 'data', type: 'array', root: true },
     http: {path: '/_all_docs', verb: 'get'}
   });
 
@@ -23,7 +27,7 @@ module.exports = (model) => {
 
   model.remoteMethod('createMany', {
     accepts: {arg: 'data', type: 'object', http: {source: 'body'}},
-    returns: {arg: 'data', type: 'object', root: true },
+    returns: {arg: 'data', type: 'array', root: true },
     http: {path: '/_bulk_docs', verb: 'post'}
   });
 
